@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -8,7 +9,9 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect("mongodb://rwx:iZF0bCNsUgAvlqie@localhost:27017/Employees-DB")
+  .connect(
+    `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  )
   .then(() => {
     app.listen(port, () => {
       console.log(`http://localhost:${port}/`);
