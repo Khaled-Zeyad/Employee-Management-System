@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      body {
+        background-color: #000;
+        color: #fff;
+      }
       input,
       button {
         font-size: 33px;
@@ -12,10 +16,13 @@
     </style>
   </head>
   <body>
-    <h1>What is your name?</h1>
-    <input type="text" />
-    <br />
-    <br />
-    <button>Send to DB</button>
+    <form action="/" method="post">
+      <h1>Enter Username</h1>
+      <!-- name="" (should match userSchema) -->
+      <input type="text" name="userName" />
+      <br />
+      <br />
+      <button>Submit</button>
+    </form>
   </body>
 </html>
