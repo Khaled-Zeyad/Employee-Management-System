@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Defining Schema
+// Schema
 const userSchema = new Schema({
-  userName: String, // (should match name="" in input tag)
+  userName: String,
 });
 
-// Creating a model (This model control CRUD operation)
-const UserData = mongoose.model("User-Data", userSchema); // "User-Data(s)": name of Collection in MongoDB
-
+// Model
+const UserData = mongoose.model("User-Data", userSchema);
 module.exports = UserData;
