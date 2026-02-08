@@ -5,12 +5,48 @@ const app = express();
 const port = 3001;
 const UserData = require("./models/dataSchema");
 
+// Auto-refresh
+const path = require("path");
+const livereload = require("livereload");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, "public"));
+
+const connectLivereload = require("connect-livereload");
+app.use(connectLivereload());
+
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
+
 // Middleware: decode Form data come with POST request
 // Any HTML Form need: express.urlencoded()
 app.use(express.urlencoded({ extended: true })); // Without it req.body === undefined
 
+// Add static files (e.g., CSS, JS, Images)
+app.use(express.static("public"));
+
+// EJS
+app.set("view engine", "ejs");
+
+// Main directory
 app.get("/", (req, res) => {
-  res.sendFile("./views/home.html", { root: __dirname });
+  UserData.find() // Get data from DB by using The Model
+    .then((result) => {
+      console.log(result.at(-1).userName);
+      res.render("home", {
+        title: "Home page",
+        username: result.at(-1).userName, // Display the last name added
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/index.html", (req, res) => {
+  res.send("<h1> Data has been sent! </h1>");
 });
 
 mongoose
@@ -33,7 +69,7 @@ app.post("/", (req, res) => {
   user
     .save()
     .then(() => {
-      res.redirect("/");
+      res.redirect("/index.html");
     })
     .catch((err) => {
       console.log(err);

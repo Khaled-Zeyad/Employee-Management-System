@@ -1,0 +1,11 @@
+body {
+  background-color: #000;
+  color: #fff;
+}
+h1 {
+  color: red;
+}
+input,
+button {
+  font-size: 33px;
+}
