@@ -32,21 +32,19 @@ app.set("view engine", "ejs");
 
 // Main directory
 app.get("/", (req, res) => {
-  UserData.find() // Get data from DB by using The Model
-    .then((result) => {
-      console.log(result.at(-1).userName);
-      res.render("home", {
-        title: "Home page",
-        username: result.at(-1).userName, // Display the last name added
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  res.render("index");
 });
 
-app.get("/index.html", (req, res) => {
-  res.send("<h1> Data has been sent! </h1>");
+app.get("/user/add.html", (req, res) => {
+  res.render("user/add");
+});
+
+app.get("/user/view.html", (req, res) => {
+  res.render("user/view");
+});
+
+app.get("/user/edit.html", (req, res) => {
+  res.render("user/edit");
 });
 
 mongoose
@@ -61,17 +59,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-// Create POST request (should match path of action attribute in Form tag)
-app.post("/", (req, res) => {
-  const user = new UserData(req.body);
-  console.log(req.body);
-  user
-    .save()
-    .then(() => {
-      res.redirect("/index.html");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
