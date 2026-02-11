@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const port = 3001;
-const UserData = require("./models/dataSchema");
+const empData = require("./models/dataSchema");
+const moment = require("moment");
 
 // Auto-refresh
 const path = require("path");
@@ -20,7 +21,7 @@ liveReloadServer.server.once("connection", () => {
   }, 100);
 });
 
-// Middleware: decode Form data come with POST request
+// app.use() --> Middleware --> decode Form data come with POST request
 // Any HTML Form need: express.urlencoded()
 app.use(express.urlencoded({ extended: true })); // Without it req.body === undefined
 
@@ -30,21 +31,52 @@ app.use(express.static("public"));
 // EJS
 app.set("view engine", "ejs");
 
-// Main directory
+// GET Requests
 app.get("/", (req, res) => {
-  res.render("index");
+  empData
+    .find()
+    .then((result) => {
+      res.render("index", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
-app.get("/user/add.html", (req, res) => {
+app.get("/user/add", (req, res) => {
   res.render("user/add");
 });
 
-app.get("/user/view.html", (req, res) => {
-  res.render("user/view");
+app.get("/user/edit", (req, res) => {
+  res.render("user/edit");
 });
 
-app.get("/user/edit.html", (req, res) => {
-  res.render("user/edit");
+app.get("/user/search", (req, res) => {
+  res.render("user/search");
+});
+
+app.get("/user/:id", (req, res) => {
+  empData
+    .findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", { obj: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// POST Requests
+app.post("/user/add", (req, res) => {
+  const emp = new empData(req.body);
+  emp
+    .save()
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 mongoose
