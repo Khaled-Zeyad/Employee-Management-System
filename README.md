@@ -1,4 +1,4 @@
-# Employees Management System Information
+# Employee Management System Information
 
 ## Summary
 The **Employees Management System** is a CRUD (Create, Read, Update, Delete) web application built with **Node.js**, **Express**, and **MongoDB**. It provides a web interface for managing employee records, including personal details like name, email, and location. The project uses **EJS** for server-side rendering and **Mongoose** for database interaction. It also includes a **live-reload** setup to enhance the development experience.
