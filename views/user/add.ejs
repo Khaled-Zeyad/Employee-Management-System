@@ -27,12 +27,17 @@
       <section class="w-100">
         <%- include('../components/navbar.ejs') %>
 
-        <form action="/user/add" method="post" class="mx-0 row gx-3 gy-4 mt-3" style="padding: 0 4rem">
+        <form
+          action="/user/add"
+          method="post"
+          class="mx-0 row gx-3 gy-4 mt-3"
+          style="padding: 0 4rem"
+        >
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
               name="firstName"
-              placeholder="Ali..."
+              placeholder="John"
               type="text"
               class="form-control"
               id="inputfirstName4"
@@ -42,7 +47,7 @@
             <label for="inputlastName4" class="form-label">Last Name:</label>
             <input
               name="lastName"
-              placeholder="Hassan..."
+              placeholder="Doe"
               type="text"
               class="form-control"
               id="inputlastName4"
@@ -53,18 +58,18 @@
             <label for="inputemail4" class="form-label">Email:</label>
             <input
               name="email"
-              placeholder="ali@gmail.com"
+              placeholder="john@gmail.com"
               type="email"
               class="form-control"
               id="inputemail4"
             />
           </div>
           <div class="col-md-6">
-            <label for="inputtele4" class="form-label">Telephone:</label>
+            <label for="inputtele4" class="form-label">Phone Number:</label>
             <input
               name="phoneNumber"
-              placeholder="01198789964"
-              type="number"
+              placeholder="+20"
+              type="string"
               class="form-control"
               id="inputtele4"
             />
@@ -75,7 +80,7 @@
               <label for="inputage4" class="form-label">Age:</label>
               <input
                 name="age"
-                placeholder="Your Age: ..."
+                placeholder="18-100"
                 type="number"
                 class="form-control"
                 id="inputage4"
@@ -87,9 +92,11 @@
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
               <select name="country" id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-                <option>Morocco</option>
-                <option>Egypt</option>
+                <% country_list.forEach(item => { %>
+                <option value="<%= item %>">
+                  <%= item %>
+                </option>
+                <% }) %>
               </select>
             </div>
           </div>
@@ -109,7 +116,7 @@
             <button
               type="submit"
               class="btn btn-primary"
-              style="position: relative; width: 25%; left: 38%; top: 50%;"
+              style="position: relative; width: 25%; left: 38%; top: 50%"
             >
               Submit
             </button>

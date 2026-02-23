@@ -34,12 +34,13 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              Ali Hassan
+              <%= `${obj.firstName} ${obj.lastName}` %>
             </li>
           </ol>
 
           <p class="me-md-5">
-            <span class="fw-medium fs-6">Id :</span> 6487021520bcf1af6319484c
+            <span class="fw-medium fs-6">Id :</span>
+            <%= obj.uuid %>
           </p>
         </nav>
 
@@ -50,7 +51,7 @@
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
-              placeholder="Ali..."
+              value="<%= obj.firstName %>"
               type="text"
               class="form-control"
               id="inputfirstName4"
@@ -59,7 +60,7 @@
           <div class="col-md-6">
             <label for="inputlastName4" class="form-label">Last Name:</label>
             <input
-              placeholder="Hassan..."
+              value="<%= obj.lastName%>"
               type="text"
               class="form-control"
               id="inputlastName4"
@@ -69,17 +70,17 @@
           <div class="col-md-6">
             <label for="inputemail4" class="form-label">Email:</label>
             <input
-              placeholder="ali@gmail.com"
+              value="<%= obj.email %>"
               type="email"
               class="form-control"
               id="inputemail4"
             />
           </div>
           <div class="col-md-6">
-            <label for="inputtele4" class="form-label">Telephone:</label>
+            <label for="inputtele4" class="form-label">Phone Number:</label>
             <input
-              placeholder="011987899"
-              type="number"
+              value="<%= obj.phoneNumber %>"
+              type="string"
               class="form-control"
               id="inputtele4"
             />
@@ -89,7 +90,7 @@
             <div class="col-md-6">
               <label for="inputage4" class="form-label">Age:</label>
               <input
-                placeholder="Your Age: ..."
+                value="<%= obj.age %>"
                 type="number"
                 class="form-control"
                 id="inputage4"
@@ -101,10 +102,13 @@
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
               <select id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-
-                <option>Morocco</option>
-                <option>Egypt</option>
+                <% country_list.forEach(item => { %>
+                <% if (obj.country === item) { %>
+                <option value="<%= item %>" selected><%= item %></option>
+                <% } else { %>
+                <option value="<%= item %>"><%= item %></option>
+                <% } %>
+                <% }) %>
               </select>
             </div>
           </div>
@@ -113,9 +117,13 @@
             <div class="col-md-6">
               <label for="inputGender" class="form-label">Gender:</label>
               <select id="inputGender" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-                <option>Male</option>
-                <option>Female</option>
+                <% gender_list.forEach((g) => { %>
+                <% if(g === obj.gender) { %>
+                <option value="<%= g %>" selected><%= g %></option>
+                <% } else { %>
+                <option value="<%= g %>"><%= g %></option>
+                <% } %>
+                <% }) %>
               </select>
             </div>
           </div>
@@ -134,54 +142,62 @@
               type="button"
               class="btn btn-danger"
               style="position: relative; left: 5%; width: 20%"
+              onclick="setDeleteUuid('<%= obj.uuid %>')"
             >
               Delete Employee
             </button>
           </div>
         </form>
       </section>
+    </main>
 
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Delete Customer
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              Are you sure you want to continue delete the customer?
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-danger">Delete</button>
-            </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Delete Employee
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to continue delete the employee?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="deleteEmployee()"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
-    </main>
+    </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/sidebars.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/deleteEmployee.js"></script>
   </body>
 </html>
