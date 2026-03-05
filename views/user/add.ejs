@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <script src="../js/color-modes.js"></script>
+    <link
+      rel="stylesheet"
+      href="../bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"
+    />
+    <link rel="shortcut icon" href="/img/ali.png" type="image/x-icon" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Khaled Zeyad" />
+    <meta name="generator" content="rwx01" />
+    <title>Home page</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/dark-light.css" rel="stylesheet" />
+    <link href="/css/sidebars.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/myStyle.css" />
+  </head>
+  <body>
+    <%- include('../components/dark-light.ejs') %>
+
+    <main class="d-flex flex-nowrap">
+      <%- include('../components/sidebar.ejs', {currentPath: "add"}) %>
+
+      <section class="w-100">
+        <%- include('../components/navbar.ejs') %>
+
+        <form
+          onsubmit="addEmployee(event)"
+          class="mx-0 row gx-3 gy-4 mt-3"
+          style="padding: 0 4rem"
+        >
+          <div class="col-md-6">
+            <label for="inputfirstName4" class="form-label">First Name:</label>
+            <input
+              name="firstName"
+              placeholder="John"
+              type="text"
+              class="form-control"
+              id="inputfirstName4"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputlastName4" class="form-label">Last Name:</label>
+            <input
+              name="lastName"
+              placeholder="Doe"
+              type="text"
+              class="form-control"
+              id="inputlastName4"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputemail4" class="form-label">Email:</label>
+            <input
+              name="email"
+              placeholder="john@gmail.com"
+              type="email"
+              class="form-control"
+              id="inputemail4"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputtele4" class="form-label">Phone Number:</label>
+            <input
+              name="phoneNumber"
+              placeholder="+20"
+              type="string"
+              class="form-control"
+              id="inputtele4"
+            />
+          </div>
+
+          <div>
+            <div class="col-md-6">
+              <label for="inputage4" class="form-label">Age:</label>
+              <input
+                name="age"
+                placeholder="18-100"
+                type="number"
+                class="form-control"
+                id="inputage4"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div class="col-md-6">
+              <label for="inputCountry" class="form-label">Country:</label>
+              <select name="country" id="inputCountry" class="form-select">
+                <option selected hidden disabled>Choose here ...</option>
+                <% country_list.forEach(item => { %>
+                <option value="<%= item %>"><%= item %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <div class="col-md-6">
+              <label for="inputGender" class="form-label">Gender:</label>
+              <select name="gender" id="inputGender" class="form-select">
+                <option selected hidden disabled>Choose here ...</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="position: relative; width: 25%; left: 38%; top: 50%"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/sidebars.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/addEmployee.js"></script>
+  </body>
+</html>

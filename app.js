@@ -2,15 +2,28 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const port = 3001;
-const UserData = require("./models/dataSchema");
-
-// Middleware
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.sendFile("./views/home.html", { root: __dirname });
+const port = process.env.PORT || 3001;
+const viewRoutes = require("./routes/viewRoutes");
+const apiRoutes = require("./routes/apiRoutes");
+const path = require("path");
+const livereload = require("livereload");
+const connectLivereload = require("connect-livereload");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, "public"));
+app.use(connectLivereload());
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
 });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use("/", viewRoutes);
+app.use("/api/user", apiRoutes);
+app.set("view engine", "ejs");
+app.set("etag", false);
 
 mongoose
   .connect(
@@ -24,16 +37,3 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-app.post("/", (req, res) => {
-  const user = new UserData(req.body);
-  console.log(req.body);
-  user
-    .save()
-    .then(() => {
-      res.redirect("/");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});

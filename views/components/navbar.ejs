@@ -1,0 +1,20 @@
+<nav class="navbar bg-body-tertiary" style="padding: 1rem">
+  <div
+    class="container-fluid justify-content-center justify-content-md-between"
+  >
+    <a href="/" class="navbar-brand fw-medium fs-3 mb-1 mb-md-0">
+      Employee Management System</a
+    >
+
+    <form action="/api/user/search" method="post" class="d-flex" role="search">
+      <input
+        class="form-control me-2"
+        name="searchText"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
