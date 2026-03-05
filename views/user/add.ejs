@@ -28,8 +28,7 @@
         <%- include('../components/navbar.ejs') %>
 
         <form
-          action="/user/add"
-          method="post"
+          onsubmit="addEmployee(event)"
           class="mx-0 row gx-3 gy-4 mt-3"
           style="padding: 0 4rem"
         >
@@ -92,10 +91,9 @@
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
               <select name="country" id="inputCountry" class="form-select">
+                <option selected hidden disabled>Choose here ...</option>
                 <% country_list.forEach(item => { %>
-                <option value="<%= item %>">
-                  <%= item %>
-                </option>
+                <option value="<%= item %>"><%= item %></option>
                 <% }) %>
               </select>
             </div>
@@ -128,5 +126,6 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/sidebars.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/addEmployee.js"></script>
   </body>
 </html>

@@ -25,72 +25,69 @@
       <%- include('./components/sidebar.ejs', {currentPath: "index"}) %>
 
       <section class="w-100">
-        <%- include('./components/navbar.ejs') %>
-        <% if (arr.length === 0) { %>
-            <h1
-              style="text-align: center; margin-top: 25%;"
-            >No data available</h1>
+        <%- include('./components/navbar.ejs') %> <% if (arr.length === 0) { %>
+        <h1 style="text-align: center; margin-top: 25%">No data available</h1>
         <% } %>
         <% if (arr.length > 0) { %>
-          <table
-            style="width: 90%"
-            class="text-center mx-auto table mt-5 table-striped table-bordered"
-          >
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Country</th>
-                <th scope="col">Age</th>
-                <th scope="col">Last updated</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% arr.forEach((item, index) => { %>
-                <tr>
-                  <th scope="row"><%= index + 1 %></th>
-                  <td><%= `${item.firstName} ${item.lastName}` %></td>
-                  <td><%= item.gender %></td>
-                  <td><%= item.country %></td>
-                  <td><%= item.age %></td>
-                  <td><%= moment(item.updatedAt).fromNow() %></td>
-                  <td>
-                    <a
-                      data-bs-toggle="tooltip"
-                      data-bs-title="View details"
-                      data-bs-placement="top"
-                      class="btn btn-primary btn-sm"
-                      href="/view/<%= item.uuid %>"
-                      ><i class="bi bi-eye"></i
-                    ></a>
+        <table
+          style="width: 90%"
+          class="text-center mx-auto table mt-5 table-striped table-bordered"
+        >
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Country</th>
+              <th scope="col">Age</th>
+              <th scope="col">Last updated</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% arr.forEach((item, index) => { %>
+            <tr>
+              <th scope="row"><%= index + 1 %></th>
+              <td><%= `${item.firstName} ${item.lastName}` %></td>
+              <td><%= item.gender %></td>
+              <td><%= item.country %></td>
+              <td><%= item.age %></td>
+              <td><%= moment(item.updatedAt).fromNow() %></td>
+              <td>
+                <a
+                  data-bs-toggle="tooltip"
+                  data-bs-title="View details"
+                  data-bs-placement="top"
+                  class="btn btn-primary btn-sm"
+                  href="/view/<%= item.uuid %>"
+                  ><i class="bi bi-eye"></i
+                ></a>
 
-                    <a
-                      data-bs-toggle="tooltip"
-                      data-bs-title="Edit user"
-                      data-bs-placement="top"
-                      class="btn btn-primary btn-sm"
-                      href="/edit/<%= item.uuid %>"
-                    >
-                      <i class="bi bi-pencil"></i>
-                    </a>
-                    <button
-                      type="button"
-                      data-bs-toggle="modal" 
-                      data-bs-target="#exampleModal"
-                      data-bs-title="Delete user"
-                      data-bs-placement="top"
-                      class="btn btn-danger btn-sm"
-                      onclick="setDeleteUuid('<%= item.uuid %>')"
-                    >
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              <% }) %>
-            </tbody>
-          </table>
+                <a
+                  data-bs-toggle="tooltip"
+                  data-bs-title="Edit user"
+                  data-bs-placement="top"
+                  class="btn btn-primary btn-sm"
+                  href="/edit/<%= item.uuid %>"
+                >
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  data-bs-title="Delete user"
+                  data-bs-placement="top"
+                  class="btn btn-danger btn-sm"
+                  onclick="setDeleteUuid('<%= item.uuid %>')"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
         <% } %>
       </section>
     </main>
@@ -127,7 +124,11 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-danger" onclick="deleteEmployee()">
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="deleteEmployee()"
+            >
               Delete
             </button>
           </div>
@@ -135,6 +136,25 @@
       </div>
     </div>
 
+    <script>
+      const uuid = "<%= uuid %>";
+      fetch(`/api/allEmployees${uuid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API validation failed");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log("API validation success", data);
+        })
+        .catch((err) => {
+          console.log(err);
+          document.body.innerHTML = `
+          <h1 style="text-align: center; margin-top: 25%">Error loading employees data</h1>
+        `;
+        });
+    </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/sidebars.js"></script>
     <script src="/js/main.js"></script>

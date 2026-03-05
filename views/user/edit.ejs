@@ -45,6 +45,7 @@
         </nav>
 
         <form
+          onsubmit="editEmployee(event, '<%= obj.uuid %>')"
           class="mx-0 row gx-3 gy-4"
           style="padding: 0 2rem; margin-top: -0.85rem"
         >
@@ -195,9 +196,29 @@
       </div>
     </div>
 
+    <script>
+      const uuid = "<%= uuid %>";
+      fetch(`/api/edit/${uuid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API validation failed");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log("API validation success", data);
+        })
+        .catch((err) => {
+          console.log(err);
+          document.body.innerHTML = `
+          <h1 style="text-align: center; margin-top: 25%">Error loading employee data</h1>
+        `;
+        });
+    </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/sidebars.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/editEmployee.js"></script>
     <script src="/js/deleteEmployee.js"></script>
   </body>
 </html>

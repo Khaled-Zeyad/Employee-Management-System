@@ -7,7 +7,7 @@ async function deleteEmployee() {
     return;
   }
   try {
-    const response = await fetch(`/user/${deleteUuid}`, {
+    const response = await fetch(`/api/user/${deleteUuid}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -15,11 +15,21 @@ async function deleteEmployee() {
     });
 
     if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      window.location.href = "/";
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("exampleModal"),
+      );
+      modal.hide();
+      if (window.location.pathname.includes("/edit/")) {
+        window.location.href = "/";
+      } else {
+        document
+          .querySelector(`[onclick="setDeleteUuid('${deleteUuid}')"]`)
+          .closest("tr")
+          .remove();
+        deleteUuid = null;
+      }
     } else {
-      alert("Failed to delete employee");
+      alert(data.message || "Failed to delete employee");
     }
   } catch (err) {
     console.error(err);

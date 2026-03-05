@@ -99,6 +99,26 @@
       </section>
     </main>
 
+    <script>
+      const uuid = "<%= uuid %>";
+      fetch(`/api/view/${uuid}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("API validation failed");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log("API validation success", data);
+        })
+        .catch((err) => {
+          document.body.innerHTML = `
+          <div style="text-align:center;margin-top:50px;">
+            <h1>Error loading employee data</h1>
+          </div>
+        `;
+        });
+    </script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/sidebars.js"></script>
     <script src="/js/main.js"></script>

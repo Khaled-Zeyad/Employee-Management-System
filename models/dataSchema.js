@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 const { v4: uuid } = require("uuid");
 const Schema = mongoose.Schema;
 
-// Defining Schema
 const empSchema = new Schema(
   {
-    // (should match name="" in input tag)
     uuid: {
       type: String,
       default: uuid,
@@ -56,7 +54,6 @@ const empSchema = new Schema(
   },
 );
 
-// Creating a model (This model control CRUD operation)
-const empData = mongoose.model("Employee", empSchema); // "Employee(s)": name of Collection in MongoDB
+const empData = mongoose.model("Employee", empSchema);
 
 module.exports = empData;
